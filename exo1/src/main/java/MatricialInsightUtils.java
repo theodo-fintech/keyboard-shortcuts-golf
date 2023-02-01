@@ -7,20 +7,17 @@ public class MatricialInsightUtils {
         String strengthInsightsPrefix
     ) {
         List<Insight> insightsList = new ArrayList<>();
-
-        List<String> improvementItems = insightItems.get(InsightType.IMPROVEMENT_AXIS);
-        if (improvementItems != null && improvementItems.size() > 0) {
-            String improvementInsightValue = improvementInsightsPrefix + String.join(", ", improvementItems) + ".";
-            insightsList.add(new Insight(InsightType.IMPROVEMENT_AXIS, improvementInsightValue));
-        }
-
-        List<String> strengthItems = insightItems.get(InsightType.STRENGTH);
-        if (strengthItems != null && strengthItems.size() > 0) {
-            String strengthInsightValue = strengthInsightsPrefix + String.join(", ", strengthItems) + ".";
-            insightsList.add(new Insight(InsightType.STRENGTH, strengthInsightValue));
-        }
-
+        addInsight(insightItems, InsightType.IMPROVEMENT_AXIS, improvementInsightsPrefix, insightsList);
+        addInsight(insightItems, InsightType.STRENGTH, strengthInsightsPrefix, insightsList);
         return insightsList;
+    }
+
+    private static void addInsight(Map<InsightType, List<String>> insightItems, InsightType type, String prefix, Collection<Insight> insights) {
+        List<String> items = insightItems.get(type);
+        if (items != null && items.size() > 0) {
+            String value = prefix + String.join(", ", items) + ".";
+            insights.add(new Insight(type, value));
+        }
     }
 }
 
